@@ -5,12 +5,13 @@ import { ConnectionService } from 'src/db-config/mongoose.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument, ProductSchema, ProductStats, ProductStatsDocument } from './entities/product.entity';
 import { Model } from 'mongoose';
-import { TypesensService } from 'src/typesens/typesens.service';
+
+import { OpenSeachService } from 'src/open-seach/open-seach.service';
 
 @Injectable()
 export class ProductService {
   private logger = new Logger(ProductService.name);
-  constructor( private connectionService: ConnectionService,@InjectModel(Product.name) private productModel:Model<ProductDocument>, @InjectModel(ProductStats.name) private productStatsModel:Model<ProductStatsDocument>, private productTypeSens:TypesensService ) {}
+  constructor( private connectionService: ConnectionService,@InjectModel(Product.name) private productModel:Model<ProductDocument>, @InjectModel(ProductStats.name) private productStatsModel:Model<ProductStatsDocument>, private openSeachService:OpenSeachService ) {}
   async create(createProductDto: CreateProductDto) {
    const productModel = await this.connectionService.getConnection<ProductStatsDocument>(createProductDto.category.main,Product.name,ProductSchema)
    
@@ -26,7 +27,7 @@ return createNewProduct;
   }
   async createRandomProduct(){
     const product = {
-  id: "abc123",
+  id: Math.random().toString(),
   name: "Awesome Product",
   price: 49.99,
   description: "This is an awesome product you will love.",
@@ -44,11 +45,11 @@ return createNewProduct;
 };
 
 
-  const s = await  this.productTypeSens.addProduct(product)
+  const s = await  this.openSeachService.addProduct(product)
   return s
   }
   async findRandomProduct(){
-    const s = await  this.productTypeSens.searchProducts({query:"Awesome"})
+    const s = await  this.openSeachService.searchProducts({query:"Awesome"})
     return s
   }
 

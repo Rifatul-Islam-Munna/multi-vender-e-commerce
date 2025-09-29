@@ -9,7 +9,8 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { Connection } from 'mongoose';
-import { TypesensModule } from './typesens/typesens.module';
+
+import { OpenSeachModule } from './open-seach/open-seach.module';
 
 
 @Module({
@@ -29,7 +30,7 @@ import { TypesensModule } from './typesens/typesens.module';
   },
 })
     
-    ,UserModule, AuthModule, ProductModule, TypesensModule,
+    ,UserModule, AuthModule, ProductModule,  OpenSeachModule,
 
 
 ],
