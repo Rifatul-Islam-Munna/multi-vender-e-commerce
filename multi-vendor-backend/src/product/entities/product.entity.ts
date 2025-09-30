@@ -42,6 +42,30 @@ export class ProductStats {
 
   
 }
+
+@Schema({ _id: false })
+class ColorImage {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop({ type: [String], default: [] })
+  images: string[];
+}
+
+
+@Schema({ _id: false })
+class Feature {
+  @Prop({ required: true })
+  name: string;
+
+  @Prop()
+  description: string;
+}
+
+
+
+
+
 @Schema({ timestamps: true ,autoIndex:true})
 export class Product {
   @Prop({ required: true })
@@ -56,6 +80,12 @@ export class Product {
   @Prop({ default: 0 })
   stock: number;
 
+@Prop({ type: [ColorImage], default: [] })
+colorsImage: ColorImage[];
+
+@Prop({ type: [Feature], default: [] })
+features: Feature[];
+
   @Prop({ type: ProductImage, required: true })
   thumbnail: ProductImage;
 
@@ -65,6 +95,14 @@ export class Product {
 
   @Prop({ type: ProductCategory, required: true })
   category: ProductCategory;
+
+
+    @Prop()
+  main: string; // like :MEN,WOMEN
+    @Prop()
+  subMain: string; // Like:top,bottom
+    @Prop()
+  semiSub: string; // for extra if needed
 
   @Prop({ default: true })
   isActive: boolean;

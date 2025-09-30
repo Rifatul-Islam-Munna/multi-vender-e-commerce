@@ -1,21 +1,42 @@
+import { CategoryGrid } from "@/components/global/sections/category-grid";
+import { CustomerReviews } from "@/components/global/sections/customer-reviews";
+import { ExploreByCategory } from "@/components/global/sections/explore-by-category";
+import { FeaturedCollections } from "@/components/global/sections/featured-collections";
+import { HeroBanner } from "@/components/global/sections/hero-banner";
+import { ProductCarousel } from "@/components/global/sections/product-carousel";
+import { PromoBanner } from "@/components/global/sections/promo-banner";
+import { StyleByOccasion } from "@/components/global/sections/style-by-occasion";
+import { StyleInspiration } from "@/components/global/sections/style-inspiration";
+import { SustainabilitySection } from "@/components/global/sections/sustainability-section";
+import { categories } from "@/Static-Data/NavBar";
+import {
+  bestSellersData,
+  categoriesData,
+  collectionsData,
+  exploreCategoriesData,
+  heroData,
+  inspirationData,
+  newArrivalsData,
+  occasionsData,
+  promoBannerData,
+  reviewsData,
+  sustainabilityData,
+} from "@/Static-Data/wearable";
+import React from "react";
 
-import { CategoryGrid } from '@/components/global/sections/category-grid'
-import { CustomerReviews } from '@/components/global/sections/customer-reviews'
-import { ExploreByCategory } from '@/components/global/sections/explore-by-category'
-import { FeaturedCollections } from '@/components/global/sections/featured-collections'
-import { HeroBanner } from '@/components/global/sections/hero-banner'
-import { ProductCarousel } from '@/components/global/sections/product-carousel'
-import { PromoBanner } from '@/components/global/sections/promo-banner'
-import { StyleByOccasion } from '@/components/global/sections/style-by-occasion'
-import { StyleInspiration } from '@/components/global/sections/style-inspiration'
-import { SustainabilitySection } from '@/components/global/sections/sustainability-section'
-import { bestSellersData, categoriesData, collectionsData, exploreCategoriesData, heroData, inspirationData, newArrivalsData, occasionsData, promoBannerData, reviewsData, sustainabilityData } from '@/Static-Data/wearable'
-import React from 'react'
+export async function generateStaticParams() {
+  const params: { sub: string }[] = [];
+
+  for (const main of categories) {
+    params.push({ sub: main.name.toLocaleLowerCase() });
+  }
+
+  return params;
+}
 
 const page = () => {
-  
   return (
-     <main className="flex min-h-screen flex-col items-center">
+    <main className="flex min-h-screen flex-col items-center">
       {/* Hero Banner */}
       <HeroBanner
         title={heroData.title}
@@ -105,7 +126,7 @@ const page = () => {
         content={sustainabilityData}
       />
     </main>
-  )
-}
+  );
+};
 
-export default page
+export default page;

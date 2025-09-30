@@ -1,23 +1,23 @@
-"use client"
-import Image from "next/image"
-import { Tag, ShoppingCart, Flame, Award } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+"use client";
+import Image from "next/image";
+import { Tag, ShoppingCart, Flame, Award } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
-export type BadgeType = "hot-sale" | "discount" | "unique" 
+export type BadgeType = "hot-sale" | "discount" | "unique";
 
 export interface ProductCardProps {
-  id: string
-  title: string
-  image: string
-  price: number
-  discountPrice?: number
-  quantity?: string
-  unit?: string
-  badge?: BadgeType
-  vendorName: string
-  stock?: "in-stock" | "low-stock" | "out-of-stock"
-  onAddToCart?: (id: string) => void
+  id: string;
+  title: string;
+  image: string;
+  price: number;
+  discountPrice?: number;
+  quantity?: string;
+  unit?: string;
+  badge?: BadgeType;
+  vendorName: string;
+  stock?: "in-stock" | "low-stock" | "out-of-stock";
+  onAddToCart?: (id: string) => void;
 }
 
 export function ProductCard({
@@ -35,12 +35,12 @@ export function ProductCard({
 }: ProductCardProps) {
   const handleAddToCart = () => {
     if (onAddToCart) {
-      onAddToCart(id)
+      onAddToCart(id);
     }
-  }
+  };
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-lg border bg-background shadow-sm transition-all hover:shadow-md w-full h-[360px] hover:border-primary/20">
+    <div className="group relative flex flex-col overflow-hidden rounded-lg border border-accent bg-background shadow-none transition-all  w-full h-[360px] hover:border-primary/10">
       {/* Badge */}
       {badge && <ProductBadge type={badge} />}
 
@@ -64,7 +64,10 @@ export function ProductCard({
         </div>
 
         {/* Product Title */}
-        <h3 className=" line-clamp-1 text-sm font-medium leading-tight mb-1" title={title}>
+        <h3
+          className=" line-clamp-1 text-sm font-medium leading-tight mb-1"
+          title={title}
+        >
           {title}
         </h3>
 
@@ -89,11 +92,15 @@ export function ProductCard({
                 stock === "in-stock"
                   ? "bg-green-50 text-green-700"
                   : stock === "low-stock"
-                    ? "bg-amber-50 text-amber-700"
-                    : "bg-red-50 text-red-700"
+                  ? "bg-amber-50 text-amber-700"
+                  : "bg-red-50 text-red-700"
               }`}
             >
-              {stock === "in-stock" ? "In Stock" : stock === "low-stock" ? "Low Stock" : "Out of Stock"}
+              {stock === "in-stock"
+                ? "In Stock"
+                : stock === "low-stock"
+                ? "Low Stock"
+                : "Out of Stock"}
             </span>
           </div>
         )}
@@ -112,11 +119,11 @@ export function ProductCard({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 function ProductBadge({ type }: { type: BadgeType }) {
-  if (!type) return null
+  if (!type) return null;
 
   const badges = {
     "hot-sale": {
@@ -134,28 +141,43 @@ function ProductBadge({ type }: { type: BadgeType }) {
       variant: "secondary" as const,
       icon: <Award className="mr-1 h-3 w-3" />,
     },
-  }
+  };
 
-  const { label, variant, icon } = badges[type]
+  const { label, variant, icon } = badges[type];
 
   return (
-    <Badge variant={variant} className="absolute left-2 top-2 z-10 flex items-center">
+    <Badge
+      variant={variant}
+      className="absolute left-2 top-2 z-10 flex items-center"
+    >
       {icon}
       {label}
     </Badge>
-  )
+  );
 }
 
-function ProductPrice({ price, discountPrice }: { price: number; discountPrice?: number }) {
-  const hasDiscount = discountPrice !== undefined && discountPrice < price
-  const discountPercentage = hasDiscount ? Math.round(((price - discountPrice!) / price) * 100) : 0
+function ProductPrice({
+  price,
+  discountPrice,
+}: {
+  price: number;
+  discountPrice?: number;
+}) {
+  const hasDiscount = discountPrice !== undefined && discountPrice < price;
+  const discountPercentage = hasDiscount
+    ? Math.round(((price - discountPrice!) / price) * 100)
+    : 0;
 
   return (
     <div className="flex items-center gap-2 mb-1">
       {hasDiscount ? (
         <>
-          <span className="font-semibold text-primary text-base">${discountPrice?.toFixed(2)}</span>
-          <span className="text-sm text-muted-foreground line-through">${price.toFixed(2)}</span>
+          <span className="font-semibold text-primary text-base">
+            ${discountPrice?.toFixed(2)}
+          </span>
+          <span className="text-sm text-muted-foreground line-through">
+            ${price.toFixed(2)}
+          </span>
           <span className="inline-flex items-center rounded-full bg-rose-50 px-1.5 py-0.5 text-xs font-medium text-rose-600">
             {discountPercentage}% off
           </span>
@@ -164,5 +186,5 @@ function ProductPrice({ price, discountPrice }: { price: number; discountPrice?:
         <span className="font-semibold text-base">${price.toFixed(2)}</span>
       )}
     </div>
-  )
+  );
 }

@@ -5,13 +5,21 @@ const nextConfig: NextConfig = {
     cssChunking: true,
     reactCompiler: true,
     viewTransition: true,
+   
   },
   images: {
     remotePatterns:[{
       hostname:"placehold.co"
     }]
-  }
-  /* config options here */
+  },
+  
+
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;

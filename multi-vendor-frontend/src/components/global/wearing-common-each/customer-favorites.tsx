@@ -1,27 +1,26 @@
-"use client"
+"use client";
 
-
-import { Heart, Star } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card, CardContent } from "@/components/ui/card"
-import Image from "next/image"
-import { ProductCard, ProductCardProps } from "../Common-Card/Card"
+import { Heart, Star } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
+import { ProductCard, ProductCardProps } from "../Common-Card/Card";
 
 export interface CustomerReview {
-  id: string
-  userName: string
-  userAvatar?: string
-  rating: number
-  date: string
-  comment: string
-  images?: string[]
+  id: string;
+  userName: string;
+  userAvatar?: string;
+  rating: number;
+  date: string;
+  comment: string;
+  images?: string[];
 }
 
 export interface CustomerFavoritesProps {
-  title?: string
-  products: ProductCardProps[]
-  reviews: CustomerReview[]
-  onAddToCart?: (id: string) => void
+  title?: string;
+  products: ProductCardProps[];
+  reviews: CustomerReview[];
+  onAddToCart?: (id: string) => void;
 }
 
 export function CustomerFavorites({
@@ -31,15 +30,17 @@ export function CustomerFavorites({
   onAddToCart = (id) => console.log(`Added ${id} to cart`),
 }: CustomerFavoritesProps) {
   if (products.length === 0 && reviews.length === 0) {
-    return null
+    return null;
   }
 
   return (
-    <section className="py-12 bg-slate-50">
-      <div className="container px-4 md:px-6">
+    <section className="py-12 ">
+      <div className="container ">
         <div className="flex items-center gap-2 mb-8">
           <Heart className="h-5 w-5 text-rose-500" />
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{title}</h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+            {title}
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -47,26 +48,38 @@ export function CustomerFavorites({
           {products.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {products.slice(0, 4).map((product) => (
-                <ProductCard key={product.id} {...product} onAddToCart={onAddToCart} />
+                <ProductCard
+                  key={product.id}
+                  {...product}
+                  onAddToCart={onAddToCart}
+                />
               ))}
             </div>
           )}
 
           {/* Reviews */}
           {reviews.length > 0 && (
-            <div className="space-y-4">
+            <div className="space-y-1.5">
               {reviews.map((review) => (
-                <Card key={review.id} className="overflow-hidden">
+                <Card
+                  key={review.id}
+                  className="overflow-hidden shadow-none rounded-md border-secondary"
+                >
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <Avatar className="h-10 w-10 border">
                         <AvatarImage
                           src={
-                            review.userAvatar || `/placeholder.svg?height=40&width=40&text=${review.userName.charAt(0)}`
+                            review.userAvatar ||
+                            `/placeholder.svg?height=40&width=40&text=${review.userName.charAt(
+                              0
+                            )}`
                           }
                           alt={review.userName}
                         />
-                        <AvatarFallback>{review.userName.charAt(0)}</AvatarFallback>
+                        <AvatarFallback>
+                          {review.userName.charAt(0)}
+                        </AvatarFallback>
                       </Avatar>
 
                       <div className="flex-1">
@@ -77,22 +90,36 @@ export function CustomerFavorites({
                               {[...Array(5)].map((_, i) => (
                                 <Star
                                   key={i}
-                                  className={`h-4 w-4 ${i < review.rating ? "fill-amber-400 text-amber-400" : "text-muted-foreground"}`}
+                                  className={`h-4 w-4 ${
+                                    i < review.rating
+                                      ? "fill-amber-400 text-amber-400"
+                                      : "text-muted-foreground"
+                                  }`}
                                 />
                               ))}
                             </div>
                           </div>
-                          <span className="text-xs text-muted-foreground">{review.date}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {review.date}
+                          </span>
                         </div>
 
-                        <p className="mt-2 text-sm text-muted-foreground">{review.comment}</p>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          {review.comment}
+                        </p>
 
                         {review.images && review.images.length > 0 && (
                           <div className="mt-3 flex items-center gap-2">
                             {review.images.map((image, index) => (
-                              <div key={index} className="relative h-16 w-16 overflow-hidden rounded-md">
+                              <div
+                                key={index}
+                                className="relative h-16 w-16 overflow-hidden rounded-md"
+                              >
                                 <Image
-                                  src={image || "/placeholder.svg?height=64&width=64"}
+                                  src={
+                                    image ||
+                                    "/placeholder.svg?height=64&width=64"
+                                  }
                                   alt={`Review image ${index + 1}`}
                                   fill
                                   className="object-cover"
@@ -111,5 +138,5 @@ export function CustomerFavorites({
         </div>
       </div>
     </section>
-  )
+  );
 }

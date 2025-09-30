@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 import {
   Shirt,
   Baby,
@@ -10,7 +10,7 @@ import {
   Watch,
   Tv,
   Brush,
-} from "lucide-react"
+} from "lucide-react";
 
 export default function Category() {
   const categories = [
@@ -64,11 +64,11 @@ export default function Category() {
       icon: <Brush className="h-10 w-10" />,
       href: "/category/beauty",
     },
-  ]
+  ];
 
   return (
-    <section className="w-full py-16 bg-gradient-to-b from-white to-gray-50">
-      <div className="container px-4 md:px-6 mx-auto">
+    <section className="w-full py-16 ">
+      <div className="container mx-auto">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-10">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
             Popular Categories
@@ -86,7 +86,9 @@ export default function Category() {
               className="flex flex-col items-center justify-center p-8 rounded-xl bg-white hover:bg-gray-50 transition-all duration-300 border border-gray-200 hover:border-gray-100   hover:shadow-sm group"
             >
               <div className="flex items-center justify-center w-20 h-20 rounded-full bg-gray-50 group-hover:bg-white mb-5 group-hover:scale-110 transition-all duration-300">
-                <div className="text-gray-700 group-hover:text-primary transition-colors">{category.icon}</div>
+                <div className="text-gray-700 group-hover:text-primary transition-colors">
+                  {category.icon}
+                </div>
               </div>
               <span className="text-base font-medium mt-2 group-hover:text-primary transition-colors">
                 {category.name}
@@ -96,5 +98,5 @@ export default function Category() {
         </div>
       </div>
     </section>
-  )
+  );
 }

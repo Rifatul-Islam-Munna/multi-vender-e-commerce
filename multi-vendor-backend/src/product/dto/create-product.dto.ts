@@ -1,5 +1,6 @@
 import { 
-  IsString, IsNumber, IsOptional, IsBoolean, IsArray, IsDateString, IsMongoId, ValidateNested, IsObject 
+  IsString, IsNumber, IsOptional, IsBoolean, IsArray, IsDateString, IsMongoId, ValidateNested, IsObject, 
+  IsNotEmpty
 } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
@@ -37,6 +38,39 @@ class ProductCategoryDto {
   @IsString()
   category: string;
 }
+export class ColorImageDto {
+  @ApiProperty({ description: 'Color name', example: 'Black' })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ApiProperty({ 
+    description: 'Array of image URLs for this color',
+    type: [String] 
+  })
+  @IsArray()
+  @IsString({ each: true })
+  images: string[];
+}
+export class FeatureDto {
+  @ApiProperty({ 
+    description: 'Feature name',
+    example: 'Active Noise Cancellation' 
+  })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ApiPropertyOptional({ 
+    description: 'Feature description',
+    example: 'Advanced ANC technology' 
+  })
+  @IsString()
+  @IsOptional()
+  description?: string;
+}
+
+
 
 export class CreateProductDto {
   @ApiProperty({ description: 'Product name' })
@@ -47,6 +81,14 @@ export class CreateProductDto {
   @IsOptional()
   @IsString()
   description?: string;
+   @ApiPropertyOptional({ description: 'Product description',type:[ColorImageDto] })
+
+  colorsImage: ColorImageDto[]
+   @ApiPropertyOptional({ description: 'Product description',type:[FeatureDto] })
+
+  features: FeatureDto[]
+
+
 
   @ApiProperty({ description: 'Product price' })
   @Transform(({ value }) => Number(value))

@@ -1,12 +1,34 @@
-import BuyingGuide from "@/components/global/category/buying-guide"
-import HeroBanner from "@/components/global/category/hero-banner"
-import Section from "@/components/global/category/section"
-import TopBrands from "@/components/global/category/top-brands"
-import { samplePageData } from "@/Static-Data/category/sample-data"
+import BuyingGuide from "@/components/global/category/buying-guide";
+import HeroBanner from "@/components/global/category/hero-banner";
+import Section from "@/components/global/category/section";
+import TopBrands from "@/components/global/category/top-brands";
+import { samplePageData } from "@/Static-Data/category/sample-data";
+import { categories } from "@/Static-Data/NavBar";
 
+export async function generateStaticParams() {
+  const params: { sub: string; "semi-sub": string; topic: string }[] = [];
 
-export default function CategoryPage() {
-  const { hero, brands, faqs } = samplePageData
+  for (const main of categories) {
+    for (const sub of main.submenu) {
+      for (const topic of sub.submenu) {
+        params.push({
+          sub: main.name.toLocaleLowerCase(),
+          "semi-sub": sub.label.toLocaleLowerCase(),
+          topic: topic.label.toLocaleLowerCase(),
+        });
+      }
+    }
+  }
+
+  return params;
+}
+export default async function CategoryPage({
+  params,
+}: {
+  params: { sub: string; "semi-sub": string; topic: string };
+}) {
+  const { hero, brands, faqs } = samplePageData;
+  console.log(await params);
 
   // Each category gets its own section with products
   const tshirtProducts = [
@@ -46,7 +68,7 @@ export default function CategoryPage() {
       price: 34.99,
       isNew: true,
     },
-  ]
+  ];
 
   const shirtProducts = [
     {
@@ -85,7 +107,7 @@ export default function CategoryPage() {
       price: 52.99,
       isNew: false,
     },
-  ]
+  ];
 
   const jacketProducts = [
     {
@@ -116,7 +138,7 @@ export default function CategoryPage() {
       discount: 19,
       isNew: false,
     },
-  ]
+  ];
 
   const hoodieProducts = [
     {
@@ -137,7 +159,7 @@ export default function CategoryPage() {
       price: 59.99,
       isNew: true,
     },
-  ]
+  ];
 
   const bestSellers = [
     {
@@ -176,12 +198,16 @@ export default function CategoryPage() {
       price: 89.99,
       isNew: false,
     },
-  ]
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-12">
       {/* Hero Banner */}
-      <HeroBanner title={hero.title} description={hero.description} image={hero.image} />
+      <HeroBanner
+        title={hero.title}
+        description={hero.description}
+        image={hero.image}
+      />
 
       {/* Top Brands */}
       <TopBrands brands={brands} />
@@ -239,5 +265,5 @@ export default function CategoryPage() {
       {/* Buying Guide */}
       <BuyingGuide faqs={faqs} />
     </div>
-  )
+  );
 }
